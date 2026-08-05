@@ -45,6 +45,11 @@ def main():
         if col in df_clean.columns:
             df_clean[col] = df_clean[col].fillna('No Identificado')
             
+    # 2.4 Estandarización de texto
+    # Basado en los hallazgos del EDA, estandarizamos la columna 'estado'
+    if 'estado' in df_clean.columns:
+        df_clean['estado'] = df_clean['estado'].str.strip().str.capitalize()
+            
     # 3. Carga (Exportar a SQLite)
     os.makedirs(os.path.dirname(output_db), exist_ok=True)
     conn = sqlite3.connect(output_db)

@@ -1,10 +1,10 @@
 Tabla de Contingencia: Canal de Pago vs Estado
 --------------------------------------------------
-estado          Pagado  Anulado  PAGADO  Pagado  Pagado   Pendiente  pagado
-canal_pago                                                                 
-Corresponsal         0      315       1     344        3        343       1
-PSE                  3      327       1     330        0        307       1
-Portal Web           1      310       1     315        3        320       3
-Sucursal             1      304       3     367        0        362       1
-Transferencia        1      360       2     347        3        319       1
+estado         Anulado  Pagado  Pendiente
+canal_pago                               
+Corresponsal       315     349        343
+PSE                327     335        307
+Portal Web         310     323        320
+Sucursal           304     372        362
+Transferencia      360     354        319
 
