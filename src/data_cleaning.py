@@ -32,7 +32,17 @@ def main():
     df_excepciones = df[mask_excepciones].copy()
     
     # Agregar una marca a los registros para la auditoría (Data Steward)
-    df_excepciones['etiqueta_dq'] = "Requiere Revisión (Data Steward)"
+    def asignar_etiqueta(row):
+        if pd.isna(row['fecha_contabilizacion']) or pd.isna(row['centro_costo']):
+            return "Nulo Crítico"
+        # Revisamos duplicados totales de forma general en la máscara
+        return "Requiere Revisión"
+
+    # Una forma mucho más rápida y vectorial de asignar etiquetas múltiples
+    df_excepciones.loc[mask_nulos[mask_excepciones], 'etiqueta_dq'] = "Nulo Crítico"
+    df_excepciones.loc[mask_colisiones_id[mask_excepciones], 'etiqueta_dq'] = "Colisión de ID"
+    df_excepciones.loc[mask_duplicados[mask_excepciones], 'etiqueta_dq'] = "Duplicidad Exacta"
+    
     
     print(f"Total de registros aislados en la bandeja de excepciones: {df_excepciones.shape[0]}")
     
