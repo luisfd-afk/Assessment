@@ -10,9 +10,9 @@ env/
 .ipynb_checkpoints/
 
 # Bases de datos y archivos grandes
-# No ignoraremos los de /raw por ahora para que el evaluador los tenga si subes el repo, 
-# pero idealmente en producción se ignoran.
-*.sqlite
+# Idealmente en producción se ignoran. Pero para esta prueba técnica,
+# subiremos el sqlite para que el Dashboard de Streamlit en la Nube pueda leerlo.
+# *.sqlite
 *.db
 
 # OS
