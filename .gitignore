@@ -1,0 +1,20 @@
+# Entornos de Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.venv/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Bases de datos y archivos grandes
+# No ignoraremos los de /raw por ahora para que el evaluador los tenga si subes el repo, 
+# pero idealmente en producción se ignoran.
+*.sqlite
+*.db
+
+# OS
+.DS_Store
+Thumbs.db
