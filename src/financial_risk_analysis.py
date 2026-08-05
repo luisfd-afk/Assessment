@@ -1,0 +1,51 @@
+import pandas as pd
+
+def main():
+    input_file = 'Data/Prueba_tecnica.xlsx'
+    
+    print("--- INICIANDO ANÁLISIS DE RIESGO FINANCIERO ---")
+    df = pd.read_excel(input_file)
+    
+    total_bruto = df['valor_bruto'].sum()
+    print(f"Valor bruto total de la base original: ${total_bruto:,.2f}")
+    
+    # 1. Riesgo por Nulos Críticos (Ej. fecha_contabilizacion)
+    df_nulos_fecha = df[df['fecha_contabilizacion'].isnull()]
+    riesgo_fecha = df_nulos_fecha['valor_bruto'].sum()
+    print(f"\nRiesgo por transacciones sin fecha de contabilización:")
+    print(f"Cantidad: {len(df_nulos_fecha)} transacciones")
+    print(f"Valor bruto en riesgo: ${riesgo_fecha:,.2f}")
+    
+    # 2. Riesgo por Duplicados Exactos
+    riesgo_duplicados = df[df.duplicated(keep='first')]['valor_bruto'].sum() # Valor extra artificial
+    print(f"\nRiesgo por sobreestimación debido a duplicados exactos:")
+    print(f"Valor bruto inflado artificialmente: ${riesgo_duplicados:,.2f}")
+    
+    # 3. Riesgo por Colisiones de ID (Mismo ID, distintos datos)
+    ids_repetidos = df[df.duplicated(subset=['id_transaccion'], keep=False)]['id_transaccion'].unique()
+    df_colisiones = df[df['id_transaccion'].isin(ids_repetidos)]
+    riesgo_colisiones = df_colisiones['valor_bruto'].sum()
+    print(f"\nRiesgo por inconsistencia (IDs colisionados):")
+    print(f"Cantidad de IDs afectados: {len(ids_repetidos)}")
+    print(f"Valor bruto asociado a estas colisiones: ${riesgo_colisiones:,.2f}")
+    
+    # 4. Total en riesgo (simplificado, sumando transacciones con algún defecto mayor)
+    condicion_defecto = (
+        df['fecha_contabilizacion'].isnull() | 
+        df['centro_costo'].isnull() |
+        df['cliente'].isnull() |
+        df.duplicated(subset=['id_transaccion'], keep=False)
+    )
+    df_riesgo_total = df[condicion_defecto]
+    riesgo_total = df_riesgo_total['valor_bruto'].sum()
+    
+    print(f"\n=======================================================")
+    print(f"IMPACTO FINANCIERO GLOBAL (Capital comprometido)")
+    print(f"=======================================================")
+    print(f"Transacciones con defectos críticos: {len(df_riesgo_total)}")
+    print(f"Valor bruto expuesto a riesgo: ${riesgo_total:,.2f}")
+    print(f"Porcentaje del total de la base: {(riesgo_total/total_bruto)*100:.2f}%")
+    print(f"=======================================================")
+
+if __name__ == "__main__":
+    main()

@@ -36,7 +36,18 @@ Se identificó la ausencia de información en campos clave para el negocio:
 > [!WARNING]
 > La diferencia entre los 80 `id_transaccion` duplicados y los 72 duplicados exactos indica que **existen 8 transacciones con el mismo ID pero con diferentes valores** en otras columnas. Esto es un riesgo severo de integridad que podría estar duplicando ingresos/gastos en los reportes o sobreescribiendo información errónea.
 
-## 3. Siguientes Pasos (Plan de Depuración)
+## 3. Cuantificación del Riesgo Financiero (Business Impact)
+
+Más allá de identificar los errores técnicos, se ejecutó un script de análisis (`src/financial_risk_analysis.py`) para cuantificar el impacto monetario de esta mala calidad de datos. Sobre un valor bruto total original de **$576,457 millones**, encontramos lo siguiente:
+
+- **Riesgo por Nulos Críticos:** 151 transacciones sin fecha de contabilización ponen en riesgo de retraso contable o descuadre un valor de **$18,501 millones**.
+- **Sobreestimación por Duplicidad:** Los duplicados exactos inflan artificialmente la base en **$186 millones**.
+- **Inconsistencia por Colisión de IDs:** Los 80 IDs colisionados comprometen la trazabilidad de **$754 millones**.
+
+> [!CAUTION]
+> **Impacto Global:** Existen 496 transacciones con defectos críticos (fechas nulas, sin centro de costo, IDs duplicados o clientes nulos). Esto significa que **$44,871 millones (el 7.78% del total transado)** está expuesto a riesgo operativo, tributario o contable por falta de gobierno de datos.
+
+## 4. Siguientes Pasos (Plan de Depuración)
 
 Para entregar la base de datos depurada, ejecutaremos las siguientes acciones de mejora (ETL):
 
