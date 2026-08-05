@@ -47,5 +47,25 @@ def main():
     print(f"Porcentaje del total de la base: {(riesgo_total/total_bruto)*100:.2f}%")
     print(f"=======================================================")
 
+    # 5. Proyección a futuro (Forecasting simple)
+    df['fecha_transaccion'] = pd.to_datetime(df['fecha_transaccion'], errors='coerce')
+    min_date = df['fecha_transaccion'].min()
+    max_date = df['fecha_transaccion'].max()
+    
+    if pd.notnull(min_date) and pd.notnull(max_date):
+        dias_dataset = (max_date - min_date).days
+        meses_dataset = max(1, dias_dataset / 30.44) # Promedio de días por mes
+        
+        riesgo_mensual_promedio = riesgo_total / meses_dataset
+        riesgo_proyectado_anual = riesgo_mensual_promedio * 12
+        
+        print(f"\n=======================================================")
+        print(f"FORECASTING (Proyección de Riesgo)")
+        print(f"=======================================================")
+        print(f"Período del dataset: {min_date.strftime('%Y-%m-%d')} a {max_date.strftime('%Y-%m-%d')} ({meses_dataset:.1f} meses)")
+        print(f"Riesgo financiero promedio mensual: ${riesgo_mensual_promedio:,.2f}")
+        print(f"Riesgo proyectado a 12 meses (Anualizado): ${riesgo_proyectado_anual:,.2f}")
+        print(f"=======================================================")
+
 if __name__ == "__main__":
     main()

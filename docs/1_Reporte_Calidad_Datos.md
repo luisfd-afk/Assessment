@@ -47,6 +47,15 @@ Más allá de identificar los errores técnicos, se ejecutó un script de análi
 > [!CAUTION]
 > **Impacto Global:** Existen 496 transacciones con defectos críticos (fechas nulas, sin centro de costo, IDs duplicados o clientes nulos). Esto significa que **$44,871 millones (el 7.78% del total transado)** está expuesto a riesgo operativo, tributario o contable por falta de gobierno de datos.
 
+### Forecasting (Proyección de Riesgo a Futuro)
+
+Tomando como base el rango de tiempo de las transacciones (aproximadamente 53.1 meses de datos observados), calculamos la tasa de defectos y proyectamos el riesgo monetario en caso de no aplicar medidas de calidad de datos preventivas:
+
+*   **Riesgo financiero promedio mensual:** $845.7 millones expuestos mensualmente a fallas de consistencia y completitud.
+*   **Proyección de pérdida/riesgo anualizado (12 meses):** **$10,149 millones**.
+
+Este es el capital proyectado que entrará al sistema con defectos críticos durante el próximo año si no se implementa el proceso ETL depurativo de inmediato.
+
 ## 4. Siguientes Pasos (Plan de Depuración)
 
 Para entregar la base de datos depurada, ejecutaremos las siguientes acciones de mejora (ETL):
