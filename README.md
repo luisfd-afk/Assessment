@@ -2,16 +2,16 @@
 
 Este repositorio contiene la solución integral a la prueba técnica, enfocada en resolver problemas reales de negocio a través de **Data Engineering, ETL, Data Quality, Análisis Financiero y Visualización Interactiva**.
 
-## 🛠️ Herramientas Utilizadas
+## Herramientas Utilizadas
 
 **Parte 1: Análisis, Pipeline y Calidad de Datos**
-*   **Python (Pandas & Numpy):** Utilizado para el análisis exploratorio (EDA) y la construcción del pipeline ETL. Permite manejar transformaciones lógicas complejas, aislar errores y hacer el proceso 100% reproducible en comparación con procesos manuales en Excel.
-*   **SQLite:** Actúa como nuestro Data Warehouse local (`db_financiera.sqlite`). Elegido por ser una base de datos relacional ligera y sin configuración, perfecta para simular entornos productivos y ejecutar nuestras consultas de validación.
-*   **SQL:** Utilizado para crear el portafolio de consultas analíticas (Cálculo de KPIs tributarios, agregaciones por canal/ciudad y auditoría de excepciones).
-*   **Streamlit & Plotly:** Herramientas elegidas para el desarrollo del Dashboard interactivo. Permiten crear interfaces web profesionales y gráficos dinámicos (forecasting) directamente desde Python, sin depender de licencias externas de BI.
+*   **Python (Pandas & Numpy):** Utilizado para el análisis exploratorio y la construcción del pipeline ETL. Permite manejar transformaciones lógicas complejas, aislar errores y hacer el proceso 100% reproducible en comparación con procesos manuales en Excel.
+*   **SQLite:** Actúa como nuestro Data Warehouse local (`db_financiera.sqlite`). lo he elegido por ser una base de datos relacional ligera y sin configuración, perfecta para simular entornos productivos y ejecutar nuestras consultas de validación.
+*   **SQL:** Utilizado para crear el portafolio de consultas analíticas como: Cálculo de KPIs tributarios, agregaciones por canal/ciudad y auditoría de excepciones.
+*   **Streamlit & Plotly:** Herramientas elegidas para el desarrollo del Dashboard interactivo. Permiten crear interfaces web profesionales y gráficos dinámicos directamente desde Python, sin depender de licencias externas de BI. (elegi usar este metodo en vez de metodos convencionales como PowerBi por practicidad, sin embargo si se quisiera desplegar una solucion mas robusta se podria usar metodologias CI/CD para desplegar en la nube).
 
-**Parte 2: Caso de Negocio (Gobierno de Datos Cloud)**
-*   **Conceptos de Arquitectura Cloud (BigQuery/Snowflake, Data Catalog):** No se programaron, pero se utilizaron como base teórica arquitectónica para resolver el problema de los silos de datos, proponiendo un "Single Source of Truth" (SSOT) gobernable.
+**Parte 2: Caso de Negocio Gobierno de Datos Cloud**
+*   **Conceptos de Arquitectura Cloud como BigQuery/Snowflake, Data Catalog:** No se implementaron de forma programatica ya que se pidio una solucion conceptual, pero se utilizaron como base teórica arquitectónica para resolver el problema de los silos de datos, proponiendo un Single Source of Truth (SSOT) para garantizar un sistema de datos gobernable.
 
 ## Estructura del Proyecto
 
