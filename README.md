@@ -65,7 +65,7 @@ Puedes acceder directamente a la versión desplegada en la nube sin instalar nad
 ### Opción B: Ejecutarlo Localmente
 Si deseas correr el entorno visual interactivo en tu propia máquina, ejecuta el siguiente comando en tu terminal:
 ```bash
-streamlit run dashboards/app.py
+python -m streamlit run dashboards/app.py
 ```
 *(Esto abrirá automáticamente una pestaña en tu navegador en `http://localhost:8501`)*.
 
