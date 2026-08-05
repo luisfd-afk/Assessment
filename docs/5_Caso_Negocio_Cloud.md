@@ -36,9 +36,9 @@ flowchart TD
         D --> I[Dashboard Operaciones]
     end
     
-    style A fill:#e1f5fe,stroke:#01579b
-    style D fill:#c8e6c9,stroke:#2e7d32
-    style E fill:#ffccbc,stroke:#d84315
+    style A fill:#e1f5fe,stroke:#01579b,color:#000000
+    style D fill:#c8e6c9,stroke:#2e7d32,color:#000000
+    style E fill:#ffccbc,stroke:#d84315,color:#000000
 ```
 ### 1: Fuente Única de Verdad SSOT. | definición clara del dato o indicador, criterios para la fuente del dato.
 *   **Implementación:** Un sistema donde se prohíbe la extracción directa y manual de datos crudos desde el ERP hacia hojas de cálculo individuales.
