@@ -75,4 +75,5 @@ En caso tal de que no puedas ver el Dashboard, Puedes acceder a la siguiente car
 Te invito a navegar por la carpeta `docs/` donde encontrarás los análisis a profundidad:
 - 💡 **[Reporte de Calidad y Riesgo](docs/1_Reporte_Calidad_Datos.md):** Donde se demuestra que el **7.78% del Capital Anual (Proyección de $10,149 millones)** estaba en riesgo por deficiencia en los datos.
 - 🏗️ **[Arquitectura de Excepciones](docs/3_Pipeline_Data_Quality.md):** La lógica de por qué se creó un repositorio en cuarentena para no perder trazabilidad en las auditorías.
-- 🎯 **[Conclusiones Finales](docs/4_Conclusiones_Analisis.md):** Síntesis gerencial del trabajo técnico.
+- 🎯 **[Conclusiones Finales](docs/4_Conclusiones_Analisis.md):** Síntesis gerencial del trabajo técnico de la Parte 1.
+- ☁️ **[Resolución Caso de Negocio (Parte 2)](docs/5_Caso_Negocio_Cloud.md):** Propuesta de Arquitectura de Data Governance en la Nube (SSOT, Data Catalog, Data Stewards) para solucionar discrepancias entre áreas.
