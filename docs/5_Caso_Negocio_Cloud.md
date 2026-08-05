@@ -16,6 +16,30 @@ Igualmente, no contar con herramientas de auditoría o gobernanza de datos puede
 ## Propuesta de Solución de arquitectura. 
 Para resolver este problema de raíz y modernizar la infraestructura de los datos, propongo migrar hacia un ecosistema de **Gobierno de Datos en la Nube** Ej. Google Cloud Platform, Azure o AWS, estructurado en 4 pilares:
 
+```mermaid
+flowchart TD
+    A[ERP / Fuente de Origen] -->|Extracción Diaria| B(Pipeline ETL Automatizado)
+    
+    subgraph Data Quality Layer
+        B -->|Validación de Reglas| C{¿Datos Correctos?}
+        C -->|Sí| D[(Data Warehouse / SSOT)]
+        C -->|No| E[Bandeja de Excepciones]
+    end
+
+    subgraph Data Governance
+        F[Data Catalog] -.->|Estandariza KPIs| D
+        G[Data Stewards] -.->|Revisan y Corrigen| E
+    end
+
+    subgraph Consumo Consolidado
+        D --> H[Dashboard Contabilidad]
+        D --> I[Dashboard Operaciones]
+    end
+    
+    style A fill:#e1f5fe,stroke:#01579b
+    style D fill:#c8e6c9,stroke:#2e7d32
+    style E fill:#ffccbc,stroke:#d84315
+```
 ### 1: Fuente Única de Verdad SSOT. | definición clara del dato o indicador, criterios para la fuente del dato.
 *   **Implementación:** Un sistema donde se prohíbe la extracción directa y manual de datos crudos desde el ERP hacia hojas de cálculo individuales.
 *   **Resultado:** Se construye un Data Lakehouse o Data Warehouse en la Nube Ej. Google BigQuery o Snowflake. Todos los tableros de Power BI y reportes, tanto para Contabilidad como para Operaciones, deben conectarse obligatoriamente a esta única base de datos certificada, que seria el equivalente a la tabla `transacciones` que limpié en la Parte 1. De esta manera se elimina la incertidumbre sobre la información, ya que todos los departamentos consumen la misma información, lo que permite una mayor transparencia y confianza en los datos. 
