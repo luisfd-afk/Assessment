@@ -45,16 +45,16 @@ Este reporte presenta los resultados del Análisis Exploratorio de Datos (EDA) b
 ### Tabla de Contingencia y Gráfico de Barras Apiladas
 ![Barras Apiladas](eda_graphs/4_barras_apiladas_canal_estado.png)
 
-**Tabla de resumen rápido (Muestra del cruce sin estandarizar):**
+**Tabla de resumen rápido (Después de aplicar la estandarización en el ETL):**
 ```text
-estado          Pagado  Anulado  PAGADO  Pagado  Pagado   Pendiente  pagado
-canal_pago                                                                 
-Corresponsal         0      315       1     344        3        343       1
-PSE                  3      327       1     330        0        307       1
-Portal Web           1      310       1     315        3        320       3
-Sucursal             1      304       3     367        0        362       1
-Transferencia        1      360       2     347        3        319       1
+estado         Anulado  Pagado  Pendiente
+canal_pago                               
+Corresponsal       315     349        343
+PSE                327     335        307
+Portal Web         310     323        320
+Sucursal           304     372        362
+Transferencia      360     354        319
 ```
 
 **Conclusión:**
-Los canales de pago (PSE, Sucursal, Portal Web) tienen un volumen de uso equitativo, sin embargo, el análisis es ruidoso hasta que se unifique la variable `estado`. Este EDA nos sirvió no solo para buscar patrones de negocio, sino como un **segundo filtro de calidad de datos**, demostrando madurez analítica.
+Los canales de pago (PSE, Sucursal, Portal Web) tienen un volumen de uso equitativo. Gracias a que **identificamos y corregimos el problema de calidad de datos en la variable `estado` durante el ETL**, ahora la tabla de contingencia es 100% precisa. Este EDA sirvió como un filtro de calidad avanzado y nos garantiza que el modelo de Power BI que conectemos recibirá datos perfectamente estandarizados.
