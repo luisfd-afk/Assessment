@@ -56,11 +56,23 @@ Tomando como base el rango de tiempo de las transacciones (aproximadamente 53.1 
 
 Este es el capital proyectado que entrará al sistema con defectos críticos durante el próximo año si no se implementa el proceso ETL depurativo de inmediato.
 
-## 4. Siguientes Pasos (Plan de Depuración)
+## 4. Acciones de Mejora para Mitigar Riesgos (Plan de Acción)
 
-Para entregar la base de datos depurada, ejecutaremos las siguientes acciones de mejora (ETL):
+Para salvaguardar la confiabilidad de la información y mitigar los riesgos monetarios identificados, se han diseñado e implementado las siguientes acciones de mejora específicas para cada problema de calidad:
 
-1. **Eliminar duplicados exactos** manteniendo solo una ocurrencia.
-2. **Resolver colisiones de ID** (los 8 registros con mismo `id_transaccion` pero distintos datos), priorizando el registro con la `fecha_carga` más reciente, asumiendo que es una corrección.
-3. **Imputar nulos** donde sea lógicamente posible (ej. recuperar `cliente` mapeando desde un maestro de `nit`).
-4. **Exportar** la base consolidada a una tabla en SQLite (preparándonos para la visualización en Power BI).
+### A. Riesgo por Valores Nulos Críticos
+- **El Problema:** Ausencia de `fecha_contabilizacion`, `centro_costo` y `cliente`.
+- **Acción de Mitigación (Corto Plazo):** Implementar lógica de imputación en el ETL. Por ejemplo, cruzar el campo `nit` con una tabla maestra o los mismos registros históricos para deducir el `cliente` faltante. Para los nulos financieros (como la fecha), los registros se envían a una tabla de excepciones (`transacciones_excepciones`) evitando que contaminen los cálculos de ingresos del mes actual.
+- **Acción de Mitigación (Largo Plazo):** Configurar estos campos como **obligatorios (mandatory)** desde la interfaz de usuario (Front-End) o el formulario web donde se originan las transacciones.
+
+### B. Riesgo por Duplicidad Exacta
+- **El Problema:** 72 registros idénticos inflando el valor bruto.
+- **Acción de Mitigación:** Modificar el pipeline de ingesta para incluir un nodo de deduplicación (Ej. `df.drop_duplicates()`) antes de cualquier consolidación. Hacia atrás, auditar el sistema transaccional origen para descubrir si existe un error de doble clic (doble envío) al guardar la información.
+
+### C. Riesgo por Inconsistencia (Colisiones de ID)
+- **El Problema:** 80 IDs compartidos con datos diferentes.
+- **Acción de Mitigación:** Aplicar una regla de resolución de conflictos (Tie-breaker). El ETL ordena los registros colisionados por la columna `fecha_carga` de forma descendente, asumiendo que el registro más reciente es una corrección o actualización legítima, y descarta los anteriores.
+
+### D. Riesgo por Estandarización Textual
+- **El Problema:** Múltiples formatos para el estado ("PAGADO", "pagado", "Pagado ").
+- **Acción de Mitigación:** Agregar una capa de limpieza de strings (`.str.strip().str.capitalize()`) en el flujo de transformación de datos para unificar categóricamente los estados antes de que los consuma Power BI, asegurando agrupaciones correctas en los reportes financieros.
