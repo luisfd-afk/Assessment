@@ -3,7 +3,7 @@ import os
 import sys
 
 def main():
-    # Ruta del archivo (asumiendo que se ejecuta desde la raíz del proyecto)
+    # Ruta del archivo 
     file_path = 'Data/Prueba_tecnica.xlsx'
     
     if not os.path.exists(file_path):

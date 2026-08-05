@@ -1,7 +1,7 @@
 -- ==========================================================================================
 -- SCRIPT 01: VALIDACIÓN MATEMÁTICA Y TRIBUTARIA
 -- Objetivo: Identificar riesgos financieros por errores en el cálculo de impuestos.
--- Lógica: Busca transacciones donde el (valor_bruto + valor_impuesto) difiera del valor_neto
+-- Lógica: Busca transacciones donde el valor_bruto + valor_impuesto difiera del valor_neto
 --         o transacciones exentas de impuestos a las que se les haya cobrado valor_impuesto.
 -- ==========================================================================================
 
@@ -18,10 +18,10 @@ SELECT
     ABS(valor_neto - (valor_bruto + valor_impuesto)) AS diferencia_matematica
 FROM transacciones
 WHERE 
-    -- 1. Diferencias de cálculo mayores a $1 peso (para tolerar problemas menores de redondeo de decimales)
+    -- 1. Diferencias de cálculo mayores a $1 peso 
     ABS(valor_neto - (valor_bruto + valor_impuesto)) > 1.0 
     
-    -- 2. Transacciones exentas ('No' o 'NO') pero que registraron un impuesto cobrado
+    -- 2. Transacciones exentas, pero que registraron un impuesto cobrado
     OR (UPPER(aplica_impuesto) = 'NO' AND valor_impuesto > 0)
     
 ORDER BY diferencia_matematica DESC;

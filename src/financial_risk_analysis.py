@@ -9,19 +9,19 @@ def main():
     total_bruto = df['valor_bruto'].sum()
     print(f"Valor bruto total de la base original: ${total_bruto:,.2f}")
     
-    # 1. Riesgo por Nulos Críticos (Ej. fecha_contabilizacion)
+    # Riesgo por Nulos Críticos
     df_nulos_fecha = df[df['fecha_contabilizacion'].isnull()]
     riesgo_fecha = df_nulos_fecha['valor_bruto'].sum()
     print(f"\nRiesgo por transacciones sin fecha de contabilización:")
     print(f"Cantidad: {len(df_nulos_fecha)} transacciones")
     print(f"Valor bruto en riesgo: ${riesgo_fecha:,.2f}")
     
-    # 2. Riesgo por Duplicados Exactos
-    riesgo_duplicados = df[df.duplicated(keep='first')]['valor_bruto'].sum() # Valor extra artificial
+    # Riesgo por Duplicados Exactos
+    riesgo_duplicados = df[df.duplicated(keep='first')]['valor_bruto'].sum()
     print(f"\nRiesgo por sobreestimación debido a duplicados exactos:")
     print(f"Valor bruto inflado artificialmente: ${riesgo_duplicados:,.2f}")
     
-    # 3. Riesgo por Colisiones de ID (Mismo ID, distintos datos)
+    # Riesgo por Colisiones de ID
     ids_repetidos = df[df.duplicated(subset=['id_transaccion'], keep=False)]['id_transaccion'].unique()
     df_colisiones = df[df['id_transaccion'].isin(ids_repetidos)]
     riesgo_colisiones = df_colisiones['valor_bruto'].sum()
@@ -29,7 +29,7 @@ def main():
     print(f"Cantidad de IDs afectados: {len(ids_repetidos)}")
     print(f"Valor bruto asociado a estas colisiones: ${riesgo_colisiones:,.2f}")
     
-    # 4. Total en riesgo (simplificado, sumando transacciones con algún defecto mayor)
+    # Total en riesgo 
     condicion_defecto = (
         df['fecha_contabilizacion'].isnull() | 
         df['centro_costo'].isnull() |
@@ -47,7 +47,7 @@ def main():
     print(f"Porcentaje del total de la base: {(riesgo_total/total_bruto)*100:.2f}%")
     print(f"=======================================================")
 
-    # 5. Proyección a futuro (Forecasting simple)
+    # Proyección a futuro
     df['fecha_transaccion'] = pd.to_datetime(df['fecha_transaccion'], errors='coerce')
     min_date = df['fecha_transaccion'].min()
     max_date = df['fecha_transaccion'].max()

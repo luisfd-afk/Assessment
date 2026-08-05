@@ -1,5 +1,5 @@
 -- ==========================================================================================
--- SCRIPT 03: TABLERO DE CONTROL DEL DATA STEWARD (EXCEPCIONES)
+-- SCRIPT 03: TABLERO DE CONTROL DEL DATA STEWARD
 -- Objetivo: Monitorear el volumen y el impacto económico de los errores de calidad de datos.
 -- Lógica: Consulta a la tabla aislada de excepciones generada por el pipeline de Python.
 -- ==========================================================================================

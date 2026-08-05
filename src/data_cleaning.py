@@ -14,28 +14,27 @@ def main():
     print(f"Filas originales: {df.shape[0]}")
     
     # -------------------------------------------------------------
-    # FASE 2.A: PIPELINE DE CALIDAD (Reporte de Excepciones)
+    #  PIPELINE DE CALIDAD 
     # -------------------------------------------------------------
     print("\nAplicando reglas de calidad y aislando excepciones...")
     
-    # Regla 1: Valores nulos críticos (fecha o centro de costo)
+    # Regla 1: Valores nulos críticos
     mask_nulos = df['fecha_contabilizacion'].isnull() | df['centro_costo'].isnull()
     
-    # Regla 2: Duplicados exactos (marcamos todos los registros involucrados)
+    # Regla 2: Duplicados exactos
     mask_duplicados = df.duplicated(keep=False)
     
-    # Regla 3: Colisiones de ID (Mismo ID_transaccion, diferentes datos)
+    # Regla 3: Colisiones de ID
     mask_colisiones_id = df.duplicated(subset=['id_transaccion'], keep=False) & ~mask_duplicados
     
     # Consolidar todos los registros problemáticos
     mask_excepciones = mask_nulos | mask_duplicados | mask_colisiones_id
     df_excepciones = df[mask_excepciones].copy()
     
-    # Agregar una marca a los registros para la auditoría (Data Steward)
+    # Agregar una marca a los registros para la auditoría
     def asignar_etiqueta(row):
         if pd.isna(row['fecha_contabilizacion']) or pd.isna(row['centro_costo']):
             return "Nulo Crítico"
-        # Revisamos duplicados totales de forma general en la máscara
         return "Requiere Revisión"
 
     # Una forma mucho más rápida y vectorial de asignar etiquetas múltiples
@@ -47,7 +46,7 @@ def main():
     print(f"Total de registros aislados en la bandeja de excepciones: {df_excepciones.shape[0]}")
     
     # -------------------------------------------------------------
-    # FASE 2.B: TRANSFORMACIÓN Y LIMPIEZA (Base Oficial Consolidada)
+    # TRANSFORMACIÓN Y LIMPIEZA 
     # -------------------------------------------------------------
     print("\nIniciando limpieza para la tabla oficial...")
     
@@ -59,7 +58,7 @@ def main():
         df_clean = df_clean.sort_values('fecha_carga', ascending=False)
         df_clean = df_clean.drop_duplicates(subset=['id_transaccion'], keep='first')
         
-    # Imputación de valores nulos (Cliente vía NIT)
+    # Imputación de valores nulos 
     if 'nit' in df_clean.columns and 'cliente' in df_clean.columns:
         df_valid_clientes = df_clean.dropna(subset=['cliente'])
         nit_to_cliente = dict(zip(df_valid_clientes['nit'], df_valid_clientes['cliente']))
@@ -74,17 +73,17 @@ def main():
         if col in df_clean.columns:
             df_clean[col] = df_clean[col].fillna('No Identificado')
             
-    # Estandarización de texto (Hallazgo del EDA)
+    # Estandarización de texto 
     if 'estado' in df_clean.columns:
         df_clean['estado'] = df_clean['estado'].str.strip().str.capitalize()
             
     # -------------------------------------------------------------
-    # FASE 3: CARGA (Exportar a SQLite)
+    # CARGA
     # -------------------------------------------------------------
     os.makedirs(os.path.dirname(output_db), exist_ok=True)
     conn = sqlite3.connect(output_db)
     
-    # Guardar base oficial (Single Source of Truth)
+    # Guardar base oficial
     df_clean.to_sql('transacciones', conn, if_exists='replace', index=False)
     
     # Guardar bandeja de excepciones

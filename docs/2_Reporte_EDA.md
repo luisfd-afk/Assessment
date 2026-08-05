@@ -1,6 +1,6 @@
-# Análisis Exploratorio de Datos (EDA)
+# Análisis Exploratorio de Datos
 
-Este reporte presenta los resultados del Análisis Exploratorio de Datos (EDA) bivariante y multivariante, realizado a partir de la base de datos procesada. Todas las visualizaciones fueron generadas mediante un script automatizado en Python (`src/eda_analysis.py`).
+Este reporte presenta los resultados del EDA bivariante y multivariante, realizado a partir de la base de datos procesada. Todas las visualizaciones fueron generadas mediante un script automatizado en Python (`src/eda_analysis.py`).
 
 ---
 
@@ -11,7 +11,7 @@ Este reporte presenta los resultados del Análisis Exploratorio de Datos (EDA) b
 
 **Hallazgos principales:**
 - Se observa una correlación natural y directa entre el `valor_bruto`, `valor_impuesto` y `valor_neto`. 
-- El `porcentaje_impuesto` no muestra una correlación perfectamente lineal de +1 con los montos absolutos debido a la variación de las tasas aplicadas (probablemente debido a exenciones o diferentes tipos de servicios).
+- El `porcentaje_impuesto` no muestra una correlación perfectamente lineal de +1 con los montos absolutos debido a la variación de las tasas aplicadas probablemente debido a exenciones o diferentes tipos de servicios.
 
 ---
 
@@ -23,11 +23,11 @@ Este reporte presenta los resultados del Análisis Exploratorio de Datos (EDA) b
 
 > [!WARNING]
 > **Hallazgo Crítico de Calidad de Datos:** 
-> Al observar el eje X del Boxplot (y analizando las tablas de contingencia) detectamos un **problema de estandarización en la columna `estado`**. Existen múltiples variaciones para el mismo concepto debido a espacios en blanco y diferencias en mayúsculas/minúsculas:
+> Al observar el eje X del Boxplot y analizando las tablas de contingencia detectamos un **problema de estandarización en la columna `estado`**. Existen múltiples variaciones para el mismo concepto debido a espacios en blanco y diferencias en mayúsculas/minúsculas:
 > - `Pagado`
 > - `PAGADO`
 > - `pagado`
-> - `Pagado ` (con espacio al final)
+> - `Pagado ` (tiene un espacio al final)
 > 
 > **Recomendación para la fase final del ETL:** Aplicar funciones `.str.strip().str.capitalize()` en Python antes de construir el Dashboard final.
 
@@ -35,7 +35,7 @@ Este reporte presenta los resultados del Análisis Exploratorio de Datos (EDA) b
 ![Boxplot Cliente vs Valor Neto](eda_graphs/3_boxplot_cliente_valor.png)
 
 **Hallazgos principales:**
-- La distribución y los valores atípicos (outliers) nos permiten identificar a los clientes corporativos vs. personas naturales, o visualizar si existe un sesgo en los montos de facturación hacia algún grupo en particular.
+- La distribución y los valores atípicos nos permiten identificar a los clientes corporativos vs. personas naturales, o visualizar si existe un sesgo en los montos de facturación hacia algún grupo en particular.
 
 ---
 
@@ -57,4 +57,4 @@ Transferencia      360     354        319
 ```
 
 **Conclusión:**
-Los canales de pago (PSE, Sucursal, Portal Web) tienen un volumen de uso equitativo. Gracias a que **identificamos y corregimos el problema de calidad de datos en la variable `estado` durante el ETL**, ahora la tabla de contingencia es 100% precisa. Este EDA sirvió como un filtro de calidad avanzado y nos garantiza que el modelo de Power BI que conectemos recibirá datos perfectamente estandarizados.
+Los canales de pago PSE, Sucursal, Portal Web, tienen un volumen de uso equitativo. Gracias a que **identificamos y corregimos el problema de calidad de datos en la variable `estado` durante el ETL**, ahora la tabla de contingencia es 100% precisa. Este EDA sirvió como un filtro de calidad avanzado y nos garantiza que el modelo de Power BI que conectemos recibirá datos perfectamente estandarizados.

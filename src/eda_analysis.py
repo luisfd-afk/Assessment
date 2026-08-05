@@ -23,7 +23,7 @@ def main():
         df['fecha_transaccion'] = pd.to_datetime(df['fecha_transaccion'])
     
     # ---------------------------------------------------------
-    # 1. ANÁLISIS BIVARIANTE NUMÉRICA VS NUMÉRICA (Correlación)
+    # ANÁLISIS BIVARIANTE NUMÉRICA VS NUMÉRICA 
     # ---------------------------------------------------------
     print("Generando matriz de correlación...")
     numeric_cols = ['valor_bruto', 'porcentaje_impuesto', 'valor_impuesto', 'valor_neto']
@@ -42,11 +42,11 @@ def main():
         plt.close()
     
     # ---------------------------------------------------------
-    # 2. ANÁLISIS CATEGÓRICA VS NUMÉRICA (Gráficos de Caja)
+    # ANÁLISIS CATEGÓRICA VS NUMÉRICA 
     # ---------------------------------------------------------
     print("Generando gráficos de caja...")
     
-    # Ejemplo 1: Valor Neto vs Estado de la transacción
+    # Valor Neto vs Estado de la transacción
     if 'estado' in df.columns and 'valor_neto' in df.columns:
         plt.figure(figsize=(10, 6))
         sns.boxplot(x='estado', y='valor_neto', data=df, palette='Set2')
@@ -55,7 +55,7 @@ def main():
         plt.savefig(os.path.join(output_dir, '2_boxplot_estado_valor.png'))
         plt.close()
     
-    # Ejemplo 2: Valor Neto vs Tipo de Cliente
+    # Valor Neto vs Tipo de Cliente
     if 'tipo_cliente' in df.columns and 'valor_neto' in df.columns:
         plt.figure(figsize=(10, 6))
         sns.boxplot(x='tipo_cliente', y='valor_neto', data=df, palette='Set3')
@@ -65,7 +65,7 @@ def main():
         plt.close()
 
     # ---------------------------------------------------------
-    # 3. ANÁLISIS CATEGÓRICA VS CATEGÓRICA (Tablas y Barras Apiladas)
+    # ANÁLISIS CATEGÓRICA VS CATEGÓRICA
     # ---------------------------------------------------------
     print("Generando tablas de contingencia y gráficos de barras apiladas...")
     
@@ -79,7 +79,7 @@ def main():
             f.write("-" * 50 + "\n")
             f.write(contingency_table.to_string())
             f.write("\n\n")
-            
+        
         # Gráfico de barras apiladas
         contingency_table.plot(kind='bar', stacked=True, figsize=(10, 6), colormap='viridis')
         plt.title('Estado de las Transacciones por Canal de Pago')
