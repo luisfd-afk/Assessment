@@ -58,16 +58,12 @@ python src/financial_risk_analysis.py
 
 Para visualizar la magnitud de los datos en riesgo, el Forecasting y la trazabilidad de los errores capturados por nuestro pipeline, he construido un **Data Quality Dashboard** en Streamlit.
 
-### Opción A: Verlo Online
-Puedes acceder directamente a la versión desplegada en la nube sin instalar nada en tu equipo a través del siguiente enlace:
-👉 **[INSERTAR_URL_DE_STREAMLIT_AQUI]** *(Se actualizará una vez desplegado).*
-
-### Opción B: Ejecutarlo Localmente
-Si deseas correr el entorno visual interactivo en tu propia máquina, ejecuta el siguiente comando en tu terminal:
+### Ejecutarlo Localmente
+Para correr el entorno visual interactivo en tu propia máquina, ejecuta el siguiente comando en tu terminal (asegúrate de haber instalado los requirements.txt):
 ```bash
 python -m streamlit run dashboards/app.py
 ```
-*(Esto abrirá automáticamente una pestaña en tu navegador en `http://localhost:8501`)*.
+*(Esto abrirá automáticamente una pestaña en tu navegador web en `http://localhost:8501`)*.
 
 En caso tal de que no puedas ver el Dashboard, Puedes acceder a la siguiente carpeta para ver los reportes estaticos:
 (docs/)
